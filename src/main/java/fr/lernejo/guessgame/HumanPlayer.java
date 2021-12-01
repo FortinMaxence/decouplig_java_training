@@ -13,6 +13,10 @@ public class HumanPlayer implements Player {
     }
 
     public void respond(boolean lowerOrGreater){
+        if (lowerOrGreater)
+            logger.log("Le nombre a trouver est plus grand !");
+        else
+            logger.log("Le nombre a trouver est plus petit !");
     }
 
 }

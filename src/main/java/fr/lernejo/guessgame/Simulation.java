@@ -1,8 +1,11 @@
 package fr.lernejo.guessgame;
 import fr.lernejo.logger.Logger;
 import fr.lernejo.logger.LoggerFactory;
-
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class Simulation {
 
@@ -13,15 +16,11 @@ public class Simulation {
     public Simulation(Player player) {
         //TODO implement me
         this.player = player;
-        initialize(numberToGuess);
-        loopUntilPlayerSucceed();
-
     }
 
     public void initialize(long numberToGuess) {
         //TODO implement me
-        SecureRandom random = new SecureRandom();
-        this.numberToGuess = random.nextInt(100); // génère un nombre entre 0 (inclus) et 100 (exclus)
+        this.numberToGuess = numberToGuess;
     }
 
     /**
@@ -33,20 +32,30 @@ public class Simulation {
         if (numberToGuess == number)
             return true;
 
-        if(numberToGuess > number)
-            logger.log("Le nombre a trouver est plus grand !");
-        else
-            logger.log("Le nombre a trouver est plus petit !");
+        player.respond(numberToGuess > number);
 
         return false;
     }
 
-    public void loopUntilPlayerSucceed() {
+    public void loopUntilPlayerSucceed(long max_iterations) {
         //TODO implement me
-        while (!nextRound())
+        int iteration = 0;
+        long start = System.currentTimeMillis();
+
+        while (!nextRound() && iteration < max_iterations)
         {
             nextRound();
+            iteration++;
         }
-        logger.log("Le nombre a été trouvé !");
+
+        long end = System.currentTimeMillis();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss:SSS");
+        String date = simpleDateFormat.format(new Date(end-start));
+        logger.log("Temps: " + date);
+
+        if(iteration < max_iterations)
+            logger.log("Le nombre " + numberToGuess + " a été trouvé avant le nombre maximum d'itérations!");
+        else
+            logger.log("Le nombre " + numberToGuess + " n'a pas été trouvé avant le nombre maximum d'itérations!");
     }
 }
