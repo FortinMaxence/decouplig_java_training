@@ -13,10 +13,12 @@ public class ComputerPlayer implements Player {
         if (this.lowerOrGreater)
         {
             this.borne_basse = this.nbrGuess;
+            logger.log("Le nombre a trouver est plus grand !");
         }
         else
         {
             this.borne_haute = this.nbrGuess;
+            logger.log("Le nombre a trouver est plus petit !");
         }
 
         this.nbrGuess = (this.borne_basse + this.borne_haute)/2;

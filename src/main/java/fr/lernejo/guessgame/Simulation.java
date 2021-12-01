@@ -29,7 +29,7 @@ public class Simulation {
     private boolean nextRound() {
         //TODO implement me
         long number = player.askNextGuess();
-        if (numberToGuess == number)
+        if (this.numberToGuess == number)
             return true;
 
         player.respond(numberToGuess > number);
@@ -44,8 +44,10 @@ public class Simulation {
 
         while (!nextRound() && iteration < max_iterations)
         {
-            nextRound();
-            iteration++;
+            if (nextRound())
+                break;
+            else
+                iteration++;
         }
 
         long end = System.currentTimeMillis();
