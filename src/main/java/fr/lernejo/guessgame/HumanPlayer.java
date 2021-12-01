@@ -7,6 +7,7 @@ public class HumanPlayer implements Player {
     private final Logger logger = LoggerFactory.getLogger("player");
 
     public long askNextGuess() {
+        System.out.println("Entrez un nombre: ");
         Scanner scanner = new Scanner(System.in);
         return scanner.nextLong();
     }
